@@ -1,0 +1,1 @@
+console.log('connecte on panier');
