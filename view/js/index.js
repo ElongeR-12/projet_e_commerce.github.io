@@ -1,6 +1,5 @@
 
-
-let CreateProductsObj = () => {
+let createProductsObj = () => {
     class Products {
         constructor(id, name, price, description, imageUrl){
             this.id = id;
@@ -10,19 +9,20 @@ let CreateProductsObj = () => {
             this.imageUrl = imageUrl;
         }
     }
-    let firstProduct = new Products (1, 'caméra 1', "100 €", "c'est notre caméra 1", "../images/vcam_1.jpg" );
-    let secondProduct = new Products (2, 'caméra 2', "200 €", "c'est notre caméra 2", "../images/vcam_2.jpg" );
-    let thirdProduct = new Products (3, 'caméra 3', "300 €", "c'est notre caméra 3", "../images/vcam_3.jpg" );
-    let forthProduct = new Products (4, 'caméra 4', "400 €", "c'est notre caméra 4", "../images/vcam_4.jpg" );
-    let fifthProduct = new Products (5, 'caméra 5', "500 €", "c'est notre caméra 5", "../images/vcam_5.jpg" );
-    
+
+    let firstProduct = new Products (132, 'caméra 1', "100 €", "c'est notre caméra 1", "../images/vcam_1.jpg");
+    let secondProduct = new Products (323, 'caméra 2', "200 €", "c'est notre caméra 2", "../images/vcam_2.jpg");
+    let thirdProduct = new Products (432, 'caméra 3', "300 €", "c'est notre caméra 3", "../images/vcam_3.jpg");
+    let forthProduct = new Products (431, 'caméra 4', "400 €", "c'est notre caméra 4", "../images/vcam_4.jpg");
+    let fifthProduct = new Products (432, 'caméra 5', "500 €", "c'est notre caméra 5", "../images/vcam_5.jpg");
+
     let PRODUCT = [];
-    
     PRODUCT.push(firstProduct, secondProduct, thirdProduct, forthProduct, fifthProduct);
+    console.log(PRODUCT); 
     return PRODUCT;
 }
 
-let products = CreateProductsObj();
+let products = createProductsObj();
 
 const displayArticle = (row) => {
 
@@ -64,7 +64,9 @@ const displayArticle = (row) => {
         img.src = products[i].imageUrl;
 
         const b = document.createElement("button");
-        b.textContent = "Sélectionner"
+        b.classList.add("select");
+        b.setAttribute('data-id', products[i].id);
+        b.textContent = "Sélectionner";
 
         divcol.appendChild(pdesc);
         divcolright.appendChild(pdescright);
@@ -82,9 +84,6 @@ const displayArticle = (row) => {
 }
 
 displayArticle ();
-
-
-
 
 
 

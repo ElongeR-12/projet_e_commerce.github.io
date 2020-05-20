@@ -1,0 +1,36 @@
+[{
+    "id": 132,
+    "name": "caméra 1",
+    "price": "100",
+    "description": "c'est notre caméra 1",
+    "imageUrl": "../images/vcam_1.jpg",
+    "lenses": ["lense1", "lense2", "lense3", "lense4"]
+}, {
+    "id": 323,
+    "name": "caméra 2",
+    "price": "200 €",
+    "description": "c'est notre caméra 2",
+    "imageUrl": "../images/vcam_2.jpg",
+    "lenses": ["lense1", "lense2", "lense3", "lense4"]
+}, {
+    "id": 432,
+    "name": "caméra 3",
+    "price": "300 €",
+    "description": "c'est notre caméra 3",
+    "imageUrl": "../images/vcam_3.jpg",
+    "lenses": ["lense1", "lense2", "lense3", "lense4"]
+}, {
+    "id": 431,
+    "name": "caméra 4",
+    "price": "400 €",
+    "description": "c'est notre caméra 4",
+    "imageUrl": "../images/vcam_4.jpg",
+    "lenses": ["lense1", "lense2", "lense3", "lense4"]
+}, {
+    "id": 432,
+    "name": "caméra 5",
+    "price": "500 €",
+    "description": "c'est notre caméra 5",
+    "imageUrl": "../images/vcam_5.jpg",
+    "lenses": ["lense1", "lense2", "lense3", "lense4"]
+}]
