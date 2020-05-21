@@ -20,14 +20,14 @@
     "imageUrl": "../images/vcam_3.jpg",
     "lenses": ["lense1", "lense2", "lense3", "lense4"]
 }, {
-    "id": 431,
+    "id": 250,
     "name": "caméra 4",
     "price": "400 €",
     "description": "c'est notre caméra 4",
     "imageUrl": "../images/vcam_4.jpg",
     "lenses": ["lense1", "lense2", "lense3", "lense4"]
 }, {
-    "id": 432,
+    "id": 530,
     "name": "caméra 5",
     "price": "500 €",
     "description": "c'est notre caméra 5",

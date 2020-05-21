@@ -13,8 +13,8 @@ let createProductsObj = () => {
     let firstProduct = new Products (132, 'caméra 1', "100 €", "c'est notre caméra 1", "../images/vcam_1.jpg");
     let secondProduct = new Products (323, 'caméra 2', "200 €", "c'est notre caméra 2", "../images/vcam_2.jpg");
     let thirdProduct = new Products (432, 'caméra 3', "300 €", "c'est notre caméra 3", "../images/vcam_3.jpg");
-    let forthProduct = new Products (431, 'caméra 4', "400 €", "c'est notre caméra 4", "../images/vcam_4.jpg");
-    let fifthProduct = new Products (432, 'caméra 5', "500 €", "c'est notre caméra 5", "../images/vcam_5.jpg");
+    let forthProduct = new Products (250, 'caméra 4', "400 €", "c'est notre caméra 4", "../images/vcam_4.jpg");
+    let fifthProduct = new Products (530, 'caméra 5', "500 €", "c'est notre caméra 5", "../images/vcam_5.jpg");
 
     let PRODUCT = [];
     PRODUCT.push(firstProduct, secondProduct, thirdProduct, forthProduct, fifthProduct);
