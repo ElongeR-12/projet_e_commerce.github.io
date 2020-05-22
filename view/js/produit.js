@@ -1,4 +1,4 @@
-"use strict";
+
 //ajouter l'évènement click sur tous les boutons sélectionner
 
 const elt = document.getElementsByClassName("select");
@@ -42,9 +42,9 @@ function getProducts (success, failure) {// requête du json data par fetch
 
 var result;
 function displayProduct() { //afficher le produit dans la page produit
-    const elt = document.getElementsByClassName("produit-desc-lense");
-    console.log(elt, result);
-    let produitDescLense = `<div class="row produit-desc-lense">
+    const elemt = document.getElementsByClassName('produit-desc-lense');
+    console.log(elemt, result);
+    let produitDescLense = `
                                 <div class="col-4 text-center border-bottom>
                                 <img src="${result[0].imageUrl}" class="img-fluid rounded img-thumbnail" alt="${result[0].name}">
                                 <h4>${result[0].name}</h4>
@@ -56,10 +56,10 @@ function displayProduct() { //afficher le produit dans la page produit
                                     <img src="${result[0].imageUrl}" class="img-fluid rounded img-thumbnail" alt="${result[0].lenses[0]}">
                                     <p>Lentilles</p>
                                 </div>
-                            </div>
+                            
                             `
     console.log(produitDescLense);
-    elt.innerHTML = produitDescLense;
-    console.log(elt.innerHTML)
+    elemt[0].innerHTML = produitDescLense;
+    console.log(elemt[0].innerHTML)
 }
 
