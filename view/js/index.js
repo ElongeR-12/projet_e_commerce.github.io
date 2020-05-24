@@ -89,12 +89,12 @@ const SESSIONSTORE = { // créer un constante objet
     contents: [],
     init(){
         //vérifier s'il exite un produit le contenu de session storage
-        let _contents = sessionStorage.getItem(SESSIONSTORE.KEY);
+        let _contents = sessionStorage.getItem(this.KEY);
         if(_contents){// s'il y en a, on le transforme en array objet pour la récupération
-            SESSIONSTORE.contents = JSON.parse(_contents);
+            this.contents = JSON.parse(_contents);
         }else{
             //s'ij n'y en n'a pas, on y rajoute un objet(produit1) par défaut
-            SESSIONSTORE.contents = [
+            this.contents = [
                 {
                     _id: "5be1ed3f1c9d44000030b061",
                     name: "Zurss 50S",
@@ -105,16 +105,16 @@ const SESSIONSTORE = { // créer un constante objet
                     qty: 1
                 }
             ];
-            SESSIONSTORE.sync();
+            this.sync();
         }
     },
     async sync(){// on met la sessionstorage à jour de manière asynchrone 
-        let _cart = JSON.stringify(SESSIONSTORE.contents);
-        await sessionStorage.setItem(SESSIONSTORE.KEY, _cart);
+        let _cart = JSON.stringify(this.contents);
+        await sessionStorage.setItem(this.KEY, _cart);
     },
     find(_id){
         //chercher un id dans sessionstorage, le comparer par l'id de l'item séléctionné
-        let match = SESSIONSTORE.contents.filter(item=>{
+        let match = this.contents.filter(item=>{
             if(item._id == _id)
                 return true;
         });
@@ -123,8 +123,8 @@ const SESSIONSTORE = { // créer un constante objet
     },
     add(_id){
         
-        if(SESSIONSTORE.find(_id)){//si id existait déjà, 
-            SESSIONSTORE.increase(_id, 1);//ajouter la quantité, en fonction du nombre de click de sélection
+        if(this.find(_id)){//si id existait déjà, 
+            this.increase(_id, 1);//ajouter la quantité, en fonction du nombre de click de sélection
         }else{
             let arr = PRODUCTS.filter(product=>{//comparaison de l'id sélectionné à chaque id dans les objets produits
                 if(product._id == _id){
@@ -141,9 +141,9 @@ const SESSIONSTORE = { // créer un constante objet
                     price: arr[0].price,
                     qty: 1
                 };
-                SESSIONSTORE.contents.push(obj);// ajouter dans le contenu su session
+                this.contents.push(obj);// ajouter dans le contenu su session
                 //mettre à jour le contenu de session storage
-                SESSIONSTORE.sync();// mise à jour
+                this.sync();// mise à jour
             }else{
                 console.error('Invalid Product');
             }
@@ -151,14 +151,16 @@ const SESSIONSTORE = { // créer un constante objet
     },
     increase(_id, qty=1){
         //ajouter un la quantité de produit quand celui-ci existe déjà dans la session storage
-        SESSIONSTORE.contents = SESSIONSTORE.contents.map(item=>{
+        this.contents = this.contents.map(item=>{
             if(item._id === _id)
                 item.qty = item.qty + qty;
             return item;
         });
         //mettre à jour le contenu de session storage
-        SESSIONSTORE.sync()
+        this.sync()
     }
 };
 
 SESSIONSTORE.init();// Pour avoir un produit par défaut dans sessionstorage
+
+
