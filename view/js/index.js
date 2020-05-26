@@ -1,6 +1,6 @@
 
 let createProductsObj = () => {
-    fetch('http://localhost:3000/api/cameras', {method: 'GET', mode:'cors'})
+    fetch('http://localhost:3000/api/cameras/', {method: 'GET', mode:'cors'})
     .then(function(response) {
         return response.json()
     }).then(function(products) {
@@ -101,8 +101,8 @@ const SESSIONSTORE = { // créer un constante objet
                     description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                     imageUrl: "http://localhost:3000/images/vcam_1.jpg",
                     lenses: ["35mm 1.4", "50mm 1.6"],
-                    price: 49900,
-                    qty: 1
+                    price: 49900
+                    // qty: 1
                 }
             ];
             this.sync();
@@ -149,16 +149,16 @@ const SESSIONSTORE = { // créer un constante objet
             }
         }
     },
-    increase(_id, qty=1){
-        //ajouter un la quantité de produit quand celui-ci existe déjà dans la session storage
-        this.contents = this.contents.map(item=>{
-            if(item._id === _id)
-                item.qty = item.qty + qty;
-            return item;
-        });
-        //mettre à jour le contenu de session storage
-        this.sync()
-    }
+    // increase(_id, qty=1){
+    //     //ajouter un la quantité de produit quand celui-ci existe déjà dans la session storage
+    //     this.contents = this.contents.map(item=>{
+    //         if(item._id === _id)
+    //             item.qty = item.qty + qty;
+    //         return item;
+    //     });
+    //     //mettre à jour le contenu de session storage
+    //     this.sync()
+    // }
 };
 
 SESSIONSTORE.init();// Pour avoir un produit par défaut dans sessionstorage
