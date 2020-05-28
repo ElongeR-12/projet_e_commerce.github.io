@@ -15,6 +15,7 @@ let createProductsObj = () => {
             console.log('parsing failed', ex)
         })
 }
+
 createProductsObj();
 
 function displayProduct(products) {
@@ -213,6 +214,15 @@ function setQuantity() {
 
 function uptdatePrice(sessionStore){
     let total = sessionStore[0].qty * sessionStore[0].price;
-    let price = document.getElementsByClassName('priceElement');           
+    let price = document.getElementsByClassName('priceElement');          
     price[0].textContent = total;
+
+    if(total < 0){
+        reloadAndReinitialise();
+    }
+}
+
+function reloadAndReinitialise() {
+    sessionStorage.removeItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl');
+    window.location.reload();
 }
