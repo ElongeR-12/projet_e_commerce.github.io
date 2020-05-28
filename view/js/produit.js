@@ -109,7 +109,7 @@ function displayProduct(products) {
     for(const obj of productsStored){
          lense = obj.lenses;
          arrayLenses.push(lense);       
-     }
+    }
 
     //récupérer l'élement parent select des options
     function addSelect() {
@@ -125,6 +125,24 @@ function displayProduct(products) {
         console.log(parentSelect[0]);
     }
     addSelect();
+
+    //initialiser l'affichage du prix
+    let price = '';
+    let arrayPrice= [];
+ 
+    for(const obj of productsStored){
+         price = obj.price;
+         arrayPrice.push(price);       
+    }
+    const priceElement = document.getElementsByClassName('priceElement');
+    const spanEuroElement = document.getElementsByClassName('spanEuroElement');
+    spanEuroElement[0].textContent = ' EUR'; 
+    console.log(spanEuroElement[0]);     
+    for(let i=0; i<priceElement.length; i++){
+        priceElement[i].textContent = arrayPrice[i] 
+    }
+     
+
 
     function setQuantity(){
 
