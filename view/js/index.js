@@ -1,3 +1,4 @@
+'use strict';
 
 let createProductsObj = () => {
     fetch('http://localhost:3000/api/cameras/', {method: 'GET', mode:'cors'})
@@ -16,7 +17,7 @@ createProductsObj();
 
 let PRODUCTS = [];
 
-displayArticle = (products) =>{
+let displayArticle = (products) =>{
     PRODUCTS = products; // rendre products accessible pour la fonction addItem, dont pour SESSIONSTORE.add()
     
     let row = document.getElementsByClassName('row');

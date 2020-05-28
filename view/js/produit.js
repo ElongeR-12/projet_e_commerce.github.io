@@ -1,3 +1,4 @@
+
 let sessionStore = JSON.parse(sessionStorage.getItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl'));
 console.log(sessionStore);
 let createProductsObj = () => {
@@ -124,4 +125,35 @@ function displayProduct(products) {
     }
     addSelect();
 
+    function setQuantity(){
+            
+            
+            
+            let plus = document.getElementsByClassName('plus');//cibler l'élémént span +
+            console.log(productsStored[0]._id);
+            plus[0].setAttribute("data-id",productsStored[0]._id);//ajouter l'attribut data-id sur l'élément
+           
+            plus[0].addEventListener('click', incrementQuantity)// ajouter l'évènement click et éxecuter la fonction pour augmenter la quantité
+            
+            let qty = document.createElement('qty');
+            // qty.textContent = item.qty;
+           
+            
+            let minus = document.getElementsByClassName('minus');//cibler l'élémént span -
+            minus[0].setAttribute('data-id', productsStored[0]._id)//ajouter l'attribut data-id sur l'élément  
+            minus[0].addEventListener('click', decrementQuantity);//ajouter l'évènement click et éxecuter la fonction pour diminuer la quantité
+    
+            console.log(plus[0], minus[0]);
+   
+    }
+
+    setQuantity();//éxecuter la fonction
+
+    function incrementQuantity(){//déclarer la fonction 
+        alert('je vais incrémenter')
+    }
+    function decrementQuantity(){
+        alert('je vais décrementer')
+    };
 }
+
