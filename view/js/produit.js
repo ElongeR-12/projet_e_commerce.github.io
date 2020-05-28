@@ -1,5 +1,6 @@
 
 let sessionStore = JSON.parse(sessionStorage.getItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl'));
+
 console.log(sessionStore);
 let createProductsObj = () => {
     fetch('http://localhost:3000/api/cameras', {method: 'GET', mode:'cors'})
@@ -126,34 +127,43 @@ function displayProduct(products) {
     addSelect();
 
     function setQuantity(){
+
             
-            
-            
-            let plus = document.getElementsByClassName('plus');//cibler l'élémént span +
-            console.log(productsStored[0]._id);
-            plus[0].setAttribute("data-id",productsStored[0]._id);//ajouter l'attribut data-id sur l'élément
+            sessionStore[0].qty = 1; // ajouter un propriété qty comme quantité initialisé par une valeur 1
+                        
+            const qty = document.getElementsByClassName('qty');//cibler l'élément span avec un classe qty 
+            qty[0].textContent = sessionStore[0].qty;// mettre la valeur 1 en tant que texte 
+                        
+            const plus = document.getElementsByClassName('plus');//cibler l'élémént span +
+            console.log(sessionStore[0]._id);
+            plus[0].setAttribute("data-id",sessionStore[0]._id);//ajouter l'attribut data-id sur l'élément
            
             plus[0].addEventListener('click', incrementQuantity)// ajouter l'évènement click et éxecuter la fonction pour augmenter la quantité
             
-            let qty = document.createElement('qty');
-            // qty.textContent = item.qty;
-           
-            
-            let minus = document.getElementsByClassName('minus');//cibler l'élémént span -
-            minus[0].setAttribute('data-id', productsStored[0]._id)//ajouter l'attribut data-id sur l'élément  
+            const minus = document.getElementsByClassName('minus');//cibler l'élémént span -
+            minus[0].setAttribute('data-id', sessionStore[0]._id)//ajouter l'attribut data-id sur l'élément  
             minus[0].addEventListener('click', decrementQuantity);//ajouter l'évènement click et éxecuter la fonction pour diminuer la quantité
     
-            console.log(plus[0], minus[0]);
+            console.log(plus[0], qty[0], minus[0]);
    
     }
 
     setQuantity();//éxecuter la fonction
 
-    function incrementQuantity(){//déclarer la fonction 
-        alert('je vais incrémenter')
+    function incrementQuantity (ev, qty=1){
+        ev.preventDefault();//prévenir le comportement par défaut
+        sessionStore[0].qty += qty;//ajouter la valeur initiale de propriété qty par 1
+        const newQty = sessionStore[0].qty;// conserver cette valeur dans newQty
+        const newTextContent = document.getElementsByClassName('qty');//cibler l'élément span avec un classe qty 
+        newTextContent[0].textContent = newQty;//mettre à jour le texte avec newQty
     }
-    function decrementQuantity(){
-        alert('je vais décrementer')
+
+    function decrementQuantity(ev, qty=1){
+        ev.preventDefault();
+        sessionStore[0].qty -= qty;
+        const newQty = sessionStore[0].qty;
+        const newTextContent = document.getElementsByClassName('qty');
+        newTextContent[0].textContent = newQty;
     };
 }
 
