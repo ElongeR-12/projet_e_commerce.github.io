@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .controls{
+            height: 1.5rem;
+            cursor: pointer;
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+            background-color: #eee;
+        }
+        .controls span:nth-child(1),
+        .controls span:nth-child(3){
+            border: 1px solid cornflowerblue;
+            color: cornflowerblue;
+            background: #fff;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            padding: 0 0.5rem;
+            display: block;
+        }
+    </style>
 </head>
 <body id="product">
     <header>
@@ -34,30 +54,43 @@
         <div class="container">
             <h1 class="mt-4">Personnaliser vos produits sélectionnés</h1>
             <div class="row mt-5">
-                <div class="col-10">
+                <div class="col">
                     <div class="row">
-                        <div class="col-4 text-center border-bottom">
+                        <div class="col-3 text-center border-bottom">
                             <h3>Produits</h3>
                         </div>
-                        <div class="col-4 text-center border-bottom">
+                        <div class="col-3 text-center border-bottom">
                             <h3>Description</h3>
                         </div>
-                        <div class="col-4 text-center border-bottom">
+                        <div class="col-3 text-center border-bottom">
                             <h3>Lentilles</h3>
+                        </div>
+                        <div class="col-3 text-center border-bottom">
+                            <h3>Quantité</h3>
                         </div>
                     </div>
                     <div class="row produit-desc-lense">
-                        <div class="col-4 text-center border-bottom">
+                        <div class="col-3 text-center border-bottom">
                             <img class="img-fluid rounded img-thumbnail">
                             <h5></h5>
                         </div>
-                        <div class="col-4 d-flex align-items-center justify-content-center border-bottom">
+                        <div class="col-3 d-flex align-items-center justify-content-center border-bottom">
                             <p class="description"></p>
                         </div>
-                        <div class="col-4 d-flex align-items-center justify-content-center border-bottom">
-                            <select id="selectNumber">
-                                <option class="select">Choose a number</option>
-                            </select>
+                        <div class="col-3 d-flex align-items-center justify-content-center border-bottom parentSelect">
+                            
+                        </div>
+                        <div class="col-3 d-flex align-items-center justify-content-center border-bottom">
+                            <div class="controls"><span data-id="1">+</span><span></span><span data-id="1">-</span></div>
+                        </div>
+                    </div>
+                    <div class="row produit-desc-lense">
+                        <div class="col-6"></div>
+                        <div class="col-3 text-center border-bottom">
+                            <h3>Prix</h3>
+                        </div>
+                        <div class="col-3 text-center border-bottom">
+                            <P></P>
                         </div>
                     </div>
                 </div>
