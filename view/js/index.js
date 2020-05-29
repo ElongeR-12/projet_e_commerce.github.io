@@ -1,5 +1,3 @@
-'use strict';
-
 let createProductsObj = () => {
     fetch('http://localhost:3000/api/cameras/', {
             method: 'GET',
@@ -29,7 +27,7 @@ let displayArticle = (products) => {
         maincol.classList.add("col-lg-4", "col-sm-6", "mb-4");
 
         const card = document.createElement("div");
-        card.classList.add("card", "h-100");
+        card.classList.add("card", "h-100", 'text-center');
 
         const divcard = document.createElement("div");
         divcard.classList.add("card-body");
@@ -58,11 +56,14 @@ let displayArticle = (products) => {
         img.classList.add("card-img-bottom");
         img.src = product.imageUrl;
 
-        const b = document.createElement("button");
-        b.classList.add("select");
-        b.setAttribute('data-id', product._id);
-        b.addEventListener('click', addItem);
-        b.textContent = "Sélectionner";
+        const ANCHOR = document.createElement("a");
+        ANCHOR.setAttribute('href', './produit.html');
+
+        const button = document.createElement("button");
+        button.classList.add("select");
+        button.setAttribute('data-id', product._id);
+        button.addEventListener('click', addItem);
+        button.textContent = "Voir le produit";
 
         divcol.appendChild(h);
         divcolright.appendChild(pdescright);
@@ -73,7 +74,8 @@ let displayArticle = (products) => {
         divcard.appendChild(divrow);
         card.appendChild(divcard);
         card.appendChild(img);
-        card.appendChild(b);
+        ANCHOR.appendChild(button)
+        card.appendChild(ANCHOR);
         maincol.appendChild(card);
         row[0].appendChild(maincol);
     });
@@ -81,7 +83,6 @@ let displayArticle = (products) => {
 }
 
 function addItem(ev) {
-    ev.preventDefault();
     let _id = ev.target.getAttribute('data-id'); // récupérer la valeur de l'attribut data-id sur le bouton cliqué
     console.log('add to cart item', _id);
     SESSIONSTORE.add(_id, 1);
@@ -106,51 +107,29 @@ const SESSIONSTORE = { // créer un constante objet
         let _store = JSON.stringify(this.contents);
         await sessionStorage.setItem(this.KEY, _store);
     },
-    find(_id) {
-        //chercher un id dans sessionstorage, le comparer par l'id de l'article séléctionné
-        let match = this.contents.filter(item => {
-            if (item._id == _id) // si l'id sélectionné correspond à un item dans la sessionstorage
-                return true;
-        });
-        if (match && match[0])
-            return match[0]; //retourner la valeur dans find() pour l'utiliser das add()
-    },
+
     add(_id) {
-        if (this.find(_id)) { //si l'article existe déjà dans la sessionstorage
-            alert('ce produit est déjà ajouté');
-        } else { //procéder à l'ajout si c'est un nouveau id pour la sessionstorage
-            if (this.contents < 1) {
-                let arr = PRODUCTS.filter(product => { //comparaison de l'id sélectionné à chaque id dans les objets produits
-                    if (product._id == _id) { //si on a le même id que l'item sélectionné dans le produits fetched
-                        return true;
-                    }
-                });
-                if (arr && arr[0]) { //si on a l'array et un premier élément 
-                    let obj = { //on associe les propriétés des produits à ajouter à son correspondance dans le data produits
-                        _id: arr[0]._id,
-                        name: arr[0].name,
-                        description: arr[0].description,
-                        imageUrl: arr[0].imageUrl,
-                        lenses: arr[0].lenses,
-                        price: arr[0].price
-                    };
-                    this.contents.push(obj); // ajouter dans le contenu su session
-                    //mettre à jour le contenu de session storage
-                    this.sync(); // mise à jour
-                    this.contents.forEach(item => console.log(item._id));
-
-
-                } else { //quand on séléctionne un produit qui n'extiste pas dans data products
-                    console.error('Invalid Product');
-                };
-
-            } else {
-                alert('un produit est déjà sélectionné')
-                return
+        let arr = PRODUCTS.filter(product => { //comparaison de l'id sélectionné à chaque id dans les objets produits
+            if (product._id == _id) { //si on a le même id que l'item sélectionné dans le produits fetched
+                return true;
             }
+        });
+        if (arr && arr[0]) { //si on a l'array et un premier élément 
+            let obj = { //on associe les propriétés des produits à ajouter à son correspondance dans le data produits
+                _id: arr[0]._id,
+                name: arr[0].name,
+                description: arr[0].description,
+                imageUrl: arr[0].imageUrl,
+                lenses: arr[0].lenses,
+                price: arr[0].price
+            };
+            this.contents[0] = obj; // ajouter dans le contenu su session
+            //mettre à jour le contenu de session storage
+            this.sync(); // mise à jour
+            this.contents.forEach(item => console.log(item._id));
+        } else { //quand on séléctionne un produit qui n'extiste pas dans data products
+            console.error('Invalid Product');
         };
-
     },
-
 };
 SESSIONSTORE.init(); //ajouter un array vide par défaut
