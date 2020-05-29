@@ -46,6 +46,7 @@ function displayProduct(products) {
     displayLenseChoice(storedProducts);
     setQuantity();
     displayPrice(storedProducts);
+    
 }
 
 
@@ -139,6 +140,7 @@ function addSelect(arrayLenses) {
     const parentSelect = document.getElementsByClassName('parentSelect');
     const select = document.createElement("select");
     select.setAttribute("id", "select");
+    select.setAttribute("required", "");
     parentSelect[0].append(select);
     select.add(new Option('Choisissez une lentille'));
     for (i = 0; i < arrayLenses[0].length; i++) {
@@ -216,7 +218,6 @@ function uptdatePrice(sessionStore){
     let total = sessionStore[0].qty * sessionStore[0].price;
     let price = document.getElementsByClassName('priceElement');          
     price[0].textContent = total;
-
     if(total < 0){
         reloadAndReinitialise();
     }
@@ -226,3 +227,47 @@ function reloadAndReinitialise() {
     sessionStorage.removeItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl');
     window.location.reload();
 }
+
+const LOCALSTORE = { // créer un constante objet
+    KEY: 'SQGKLMKJIPOJjklfmqsjfoehgqdfqmlljodkjioj',
+    contents: [],
+    init() {
+        //vérifier s'il exite un produit le contenu de session storage
+        let _contents = localStorage.getItem(this.KEY);
+        if (_contents) { // s'il y en a, on le transforme en array objet pour la récupération
+            this.contents = JSON.parse(_contents);
+        } else {
+            //s'ij n'y en n'a pas, on y rajoute un array vide par défaut
+            this.contents = [];
+            this.sync();
+        }
+    },
+    async sync() { // on met la sessionstorage à jour de manière asynchrone 
+        let _cart = JSON.stringify(this.contents);
+        await localStorage.setItem(this.KEY, _cart);
+    },
+    sendProductToLocastorage(){
+        let button = document.querySelector('button');
+        console.log(button);
+        button.addEventListener('click', this.sendProduct);
+        this.init();
+       
+        
+    },
+    sendProduct(ev){
+        ev.preventDefault();
+        let e = document.getElementById("select");
+        let value = e.options[e.selectedIndex].value;
+        let text = e.options[e.selectedIndex].text;
+        console.log(text);
+        sessionStore[0].lenses = text;
+        LOCALSTORE.contents.push(sessionStore[0]);
+        console.log(LOCALSTORE.contents[0]);
+        LOCALSTORE.sync();
+        sessionStorage.removeItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl');
+        window.location.reload();
+    }
+}
+
+LOCALSTORE.sendProductToLocastorage();
+
