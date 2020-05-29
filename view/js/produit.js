@@ -1,7 +1,7 @@
 let sessionStore = JSON.parse(sessionStorage.getItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl'));
 console.log(sessionStore);
 let createProductsObj = () => {
-    fetch('http://localhost:3000/api/cameras', {
+    fetch(`http://localhost:3000/api/cameras/${sessionStore[0]._id}`, {
             method: 'GET',
             mode: 'cors'
         })
@@ -251,8 +251,6 @@ const LOCALSTORE = { // créer un constante objet
         console.log(button);
         button.addEventListener('click', this.sendProduct);
         this.init();
-       
-        
     },
     sendProduct(ev){
         ev.preventDefault();
