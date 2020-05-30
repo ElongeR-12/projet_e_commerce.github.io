@@ -56,14 +56,15 @@ let displayArticle = (products) => {
         img.classList.add("card-img-bottom");
         img.src = product.imageUrl;
 
-        const ANCHOR = document.createElement("a");
-        ANCHOR.setAttribute('href', './produit.html');
+        // const ANCHOR = document.createElement("a");
+        // ANCHOR.setAttribute('href', './produit.html');
 
-        const button = document.createElement("button");
-        button.classList.add("select");
-        button.setAttribute('data-id', product._id);
-        button.addEventListener('click', addItem);
-        button.textContent = "Voir le produit";
+        const ANCHOR = document.createElement("a");
+        ANCHOR.classList.add("select");
+        ANCHOR.setAttribute('data-id', product._id);
+        ANCHOR.setAttribute('href', './produit.html');
+        ANCHOR.addEventListener('click', addItem);
+        ANCHOR.textContent = "Voir le produit";
 
         divcol.appendChild(h);
         divcolright.appendChild(pdescright);
@@ -74,7 +75,7 @@ let displayArticle = (products) => {
         divcard.appendChild(divrow);
         card.appendChild(divcard);
         card.appendChild(img);
-        ANCHOR.appendChild(button)
+        // ANCHOR.appendChild(button);
         card.appendChild(ANCHOR);
         maincol.appendChild(card);
         row[0].appendChild(maincol);
@@ -100,6 +101,7 @@ const SESSIONSTORE = { // créer un constante objet
         } else {
             //s'ij n'y en n'a pas, on y rajoute un array vide par défaut
             this.contents = [];
+            console.log(this.contents);
             this.sync();
         }
     },
