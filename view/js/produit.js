@@ -71,8 +71,9 @@ function displayPrice(product) {
 
 
 function setQuantity(product) {
+   
+    const KEY = 'LOCALSTORE';
     let arrayOfItemValueLocalStore = [];
-    let KEY = 'SQGKLMKJIPOJjklfmqsjfoehgqdfqmlljodkjioj';
 
     let productToSet = [];
 
@@ -109,7 +110,6 @@ function setQuantity(product) {
         console.log(productToSet[0]);
         uptdatePrice()
     }
-
     function decrementQuantity(ev, decrement = 1) {
         ev.preventDefault();
         productToSet[0].quantity -= decrement;
@@ -142,8 +142,20 @@ function setQuantity(product) {
         let value = e.options[e.selectedIndex].value;
         let text = e.options[e.selectedIndex].text;
         console.log(text);
-        sessionStore[0].lenses = text;
-        arrayOfItemValueLocalStore.push(productToSet[0]);
+        productToSet[0].lenses = text;
+        console.log(arrayOfItemValueLocalStore);
+        let obj = {
+            description: productToSet[0].description,
+            imageUrl: productToSet[0].imageUrl,
+            lenses: text,
+            name: productToSet[0].name,
+            price: productToSet[0].price,
+            quantity: productToSet[0].quantity,
+            _id: productToSet[0]._id
+        }
+       
+        arrayOfItemValueLocalStore.push(obj);
+        
         sync();
         sessionStorage.removeItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl');
         window.location.reload();
@@ -151,8 +163,8 @@ function setQuantity(product) {
     function init() {
         //vérifier s'il exite un produit le contenu de session storage
         let localStoreItemValue = localStorage.getItem(KEY);
-        if (_contents) { // s'il y en a, on le transforme en array objet pour la récupération
-                carrayOfItemValueLocalStore = JSON.parse(localStoreItemValue);
+        if (localStoreItemValue) { // s'il y en a, on le transforme en array objet pour la récupération
+                arrayOfItemValueLocalStore = JSON.parse(localStoreItemValue);
             } else {
                 //s'ij n'y en n'a pas, on y rajoute un array vide par défaut
                 arrayOfItemValueLocalStore = [];
@@ -163,7 +175,10 @@ function setQuantity(product) {
         let localStoreItemValue = JSON.stringify(arrayOfItemValueLocalStore);
         await localStorage.setItem(KEY, localStoreItemValue);
     }
+   
 }
+
+
 
 function reloadAndReinitialise() {
     sessionStorage.removeItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl');
