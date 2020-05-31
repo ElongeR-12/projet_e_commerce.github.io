@@ -132,18 +132,57 @@ function setQuantity(product) {
     }
     (function sendProductToLocastorage(){
         let button = document.querySelector('button');
+        button.setAttribute('data-id', productToSet[0]._id);//ajouter l'id du produit en question en attribut sur le boutton d'envoi au panier
         console.log(button);
         button.addEventListener('click', sendProduct);
         init();
     })(); 
     function sendProduct(ev){
         ev.preventDefault();
+        let _id = ev.target.getAttribute('data-id');//récupérer l'id quand on clique l'envoi
         let e = document.getElementById("select");
         let value = e.options[e.selectedIndex].value;
         let text = e.options[e.selectedIndex].text;
-        console.log(text);
+     
         productToSet[0].lenses = text;
-        console.log(arrayOfItemValueLocalStore);
+        addLocal(_id, text);
+        
+        sessionStorage.removeItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl');
+        window.location.reload();
+    }
+    function find(_id){
+        //chercher un produit dans localstorage par son id
+        let match =   arrayOfItemValueLocalStore.filter(item=>{
+            if(item._id == _id)
+                return true;
+        });
+        if(match && match[0])
+            return match[0];
+    }
+    
+    function addLocal(_id, text){
+        //ajouter le produit dans local storage
+        //checker si celui-ci existe déjà dans le local storage
+        if(find(_id)){
+            increase(_id);
+        }else{
+            add(text);
+        }
+    }
+    function increase(_id){
+        const newQty = productToSet[0].quantity; // conserver cette valeur dans newQty
+        const newTextContent = document.getElementsByClassName('qty'); //cibler l'élément span avec un classe qty 
+        newTextContent[0].textContent = newQty; //mettre à jour le texte avec newQty
+        //augmenter 1 la quantité dans localstorage
+        arrayOfItemValueLocalStore = arrayOfItemValueLocalStore.map(item=>{
+            if(item._id === _id)
+                item.quantity = item.quantity + newQty;
+            return item;
+        });
+        //mettre à jour localstorage
+        sync();
+    }
+    function add(text){
         let obj = {
             description: productToSet[0].description,
             imageUrl: productToSet[0].imageUrl,
@@ -157,8 +196,6 @@ function setQuantity(product) {
         arrayOfItemValueLocalStore.push(obj);
         
         sync();
-        sessionStorage.removeItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl');
-        window.location.reload();
     }
     function init() {
         //vérifier s'il exite un produit le contenu de session storage
