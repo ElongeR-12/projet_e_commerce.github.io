@@ -4,10 +4,16 @@ function displayResume() {
     const LOCALSTORAGE = JSON.parse(localStorage.getItem('LOCALSTORE'));
     console.log(LOCALSTORAGE);
 
+    
     let toClone = document.getElementsByClassName('resume-area');//récupérer l'élement html
-    for(let i=1; i<LOCALSTORAGE.length; i++){	    
+    for(let i=0; i<LOCALSTORAGE.length; i++){	    
         let clone = toClone[0].cloneNode(true);//cloner l'élément et ses nodes      
         toClone[0].after(clone); //cloner l'élement clone après l'original
+        const BORDER = document.getElementsByClassName("add-border");
+        BORDER[0].classList.add('border');
+        const BORDERBOTTOM = document.getElementsByClassName("add-border-bottom");
+        BORDERBOTTOM[0].classList.add('border-bottom');
+        BORDERBOTTOM[1].classList.add('border-bottom');
     }
 
     const NAME = document.querySelectorAll('h3')
@@ -87,6 +93,40 @@ function displayResume() {
         LENSEVALUE[u++].textContent = element.lenses;
     }
 
+    
+
+    const H5 = document.querySelectorAll('h5');
+    H5[0].textContent = 'Total';
+
+    const SOUSTOTAL = document.getElementById('sous-total');
+    SOUSTOTAL.textContent = 'Sous-total';
+
+    const LIVRAISON = document.getElementById('livraison');
+    LIVRAISON.textContent = 'Livraison';
+
+    const TVA = document.getElementById('tva');
+    TVA.textContent = 'Total (TVA incluse)';
+    
+    const ARRAY = [];
+    let produce;
+    LOCALSTORAGE.map(item =>{
+        produce = item.price * item.quantity;
+        ARRAY.push(produce);
+    })
+    console.log(ARRAY);
+    
+
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    const TOTALBOOK = ARRAY.reduce(reducer);
+    console.log(TOTALBOOK);
+    const TOTAL = document.getElementById('total');
+    TOTAL.textContent = TOTALBOOK + ' €';
+    const FINALEXPEDITION = document.getElementById('final-expetition');
+    FINALEXPEDITION.textContent = "gratuit";
+    const TOTALWITHTVA = document.getElementById('total-with-tva');
+    TOTALWITHTVA.textContent= TOTALBOOK + ' €';
+    const borderBottom = document.getElementById("add-border-bottom");
+    borderBottom.classList.add('border-bottom');
 };
 
 displayResume();
