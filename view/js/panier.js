@@ -127,6 +127,15 @@ function displayResume() {
     TOTALWITHTVA.textContent= TOTALBOOK + ' €';
     const borderBottom = document.getElementById("add-border-bottom");
     borderBottom.classList.add('border-bottom');
+    const BOOKING = document.getElementsByClassName('bg-warning');
+    BOOKING[0].classList.remove('d-none');
+    BOOKING[0].addEventListener('click', showForm);
+
+    function showForm(ev){
+        ev.preventDefault();
+        const FORM = document.getElementById('contactform-form');
+        FORM.classList.remove("d-none");
+    }
 };
 
 displayResume();
