@@ -126,7 +126,7 @@ function setQuantity(product) {
         console.log(total);
         let price = document.getElementsByClassName('priceElement');          
         price[0].textContent = total;
-        if(total < 0){
+        if(total < 1){
             reloadAndReinitialise();
         }
     }
