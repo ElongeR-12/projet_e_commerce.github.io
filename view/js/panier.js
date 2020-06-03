@@ -167,11 +167,7 @@ function displayResume() {
                     "Content-type": "application/json"
                 },
                 body: JSON.stringify({
-                    firstName: contact.firstName,
-                    lastName: contact.lastName,
-                    address: contact.address,
-                    city: contact.city,
-                    email: contact.email,
+                    contact,
                     products
                 })
             })
