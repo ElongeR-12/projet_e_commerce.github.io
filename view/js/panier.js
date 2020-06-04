@@ -116,6 +116,7 @@ function displayResume() {
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     const TOTALBOOK = ARRAY.reduce(reducer);
     console.log(TOTALBOOK);
+    localStorage.setItem('finalPrice', JSON.stringify(TOTALBOOK));//store final price
     const TOTAL = document.getElementById('total');
     TOTAL.textContent = TOTALBOOK + ' €';
     const FINALEXPEDITION = document.getElementById('final-expetition');
@@ -154,9 +155,9 @@ function displayResume() {
             city: city,
             email: email
         };
-        let productsResume = LOCALSTORAGE;
+        
         let products = [];
-        productsResume.forEach(element => {
+        LOCALSTORAGE.forEach(element => {
             products.push(element._id);
         });
         console.log(products);
@@ -175,12 +176,25 @@ function displayResume() {
                 return response.json()
             })
             .then(function (data) {
-                console.log('Request succeeded with JSON response', data);
+                console.log(data, data.orderId);
+                sendOrder(data);
             })
             .catch(function (error) {
                 console.log('Request failed', error);
             });
     }
+    function sendOrder (data){
+        
+    localStorage.setItem('orderId', JSON.stringify(data.orderId));
+    // setTimeout(url);
+    setTimeout(function(url) {
+        url = './remerciement.html';
+        window.location.href = url;
+      }, 3000);
+         
+    }
+    // let url = '';
+    
 };
 
 displayResume();
