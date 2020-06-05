@@ -3,10 +3,10 @@ function displayResume() {
     const localStore = JSON.parse(localStorage.getItem('LOCALSTORE'));
     
  
-    let toClone = document.getElementsByClassName('resume-area'); //récupérer l'élement html
+    const TOCLONE = document.getElementsByClassName('resume-area'); //récupérer l'élement html
     for (const element of localStore) {
-        let clone = toClone[0].cloneNode(true); //cloner l'élément et ses nodes      
-        toClone[0].after(clone); //cloner l'élement clone après l'original
+        let clone = TOCLONE[0].cloneNode(true); //cloner l'élément et ses nodes      
+        TOCLONE[0].after(clone); //cloner l'élement clone après l'original
         const BORDER = document.getElementsByClassName("add-border");
         BORDER[0].classList.add('border');
         const BORDERBOTTOM = document.getElementsByClassName("add-border-bottom");
@@ -99,26 +99,26 @@ function displayResume() {
     const TVA = document.getElementById('tva');
     TVA.textContent = 'Total (TVA incluse)';
 
-    const ARRAY = [];
+    const array = [];
     let produce;
     localStore.map(item => {
         produce = (item.price * item.quantity);
-        ARRAY.push(produce);
+        array.push(produce);
     })
-    console.log(ARRAY);
+    // console.log(ARRAY);
 
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const TOTALBOOK = ((ARRAY.reduce(reducer))*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    console.log(TOTALBOOK);
-    localStorage.setItem('finalPrice', JSON.stringify(TOTALBOOK));//store final price
+    const totalBook = ((array.reduce(reducer))*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    // console.log(TOTALBOOK);
+    localStorage.setItem('finalPrice', JSON.stringify(totalBook));//store final price
     const TOTAL = document.getElementById('total');
-    TOTAL.textContent = TOTALBOOK + ' €';
+    TOTAL.textContent = totalBook + ' €';
     const FINALEXPEDITION = document.getElementById('final-expetition');
     FINALEXPEDITION.textContent = "gratuit";
     const TOTALWITHTVA = document.getElementById('total-with-tva');
-    TOTALWITHTVA.textContent = TOTALBOOK + ' €';
-    const borderBottom = document.getElementById("add-border-bottom");
-    borderBottom.classList.add('border-bottom');
+    TOTALWITHTVA.textContent = totalBook + ' €';
+    const LINEBOTTOM = document.getElementById("add-border-bottom");
+    LINEBOTTOM.classList.add('border-bottom');
     const BOOKING = document.getElementsByClassName('bg-warning');
     BOOKING[0].classList.remove('d-none');
     BOOKING[0].addEventListener('click', showForm);
@@ -136,7 +136,7 @@ function displayResume() {
         e.preventDefault();
 
         let firstName = document.getElementById('firstName').value;
-        console.log(firstName);
+        // console.log(firstName);
         let lastName = document.getElementById('lastName').value;
         let address = document.getElementById('address').value;
         let city = document.getElementById('city').value;
