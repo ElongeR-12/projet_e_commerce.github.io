@@ -65,7 +65,7 @@ function displayPrice(product) {
     const priceElement = document.getElementsByClassName('priceElement');
     const spanEuroElement = document.getElementsByClassName('spanEuroElement');
     spanEuroElement[0].textContent = ' EUR';
-    priceElement[0].textContent = product.price;    
+    priceElement[0].textContent = ((product.price)*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');    
 }
 
 
@@ -122,7 +122,7 @@ function setQuantity(product) {
     }
     function uptdatePrice(){
         console.log(productToSet[0].quantity);
-        let total = productToSet[0].quantity * productToSet[0].price;
+        let total = ((productToSet[0].quantity * productToSet[0].price)*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         console.log(total);
         let price = document.getElementsByClassName('priceElement');          
         price[0].textContent = total;
