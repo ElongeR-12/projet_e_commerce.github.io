@@ -1,7 +1,7 @@
 let sessionStore = JSON.parse(sessionStorage.getItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl'));
 console.log(sessionStore);
-let createProductsObj = () => {
-    fetch(`http://localhost:3000/api/cameras/${sessionStore[0]._id}`, {
+let createProductsObj = () => { //async
+    fetch(`http://localhost:3000/api/cameras/${sessionStore[0]._id}`, {//await
             method: 'GET',
             mode: 'cors'
         })

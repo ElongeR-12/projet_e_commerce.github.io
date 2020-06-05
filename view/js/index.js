@@ -50,7 +50,7 @@ let displayArticle = (products) => {
 
         const pdescright = document.createElement('p');
         pdescright.classList.add("card-text");
-        pdescright.textContent = product.price;
+        pdescright.textContent = (product.price*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
         const img = document.createElement("img");
         img.classList.add("card-img-bottom");

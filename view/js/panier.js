@@ -38,7 +38,7 @@ function displayResume() {
     const PRICE = document.getElementsByClassName('price');
   
     for (const element of localStore) {
-        PRICE[localStore.indexOf(element)].textContent = 'EUR  ' + element.price;
+        PRICE[localStore.indexOf(element)].textContent = 'EUR  ' + ((element.price)*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'); ;
     }
 
     const TOTALPRICE = document.getElementsByClassName('total-price');
@@ -50,7 +50,7 @@ function displayResume() {
     const TOTALPRICEVALUE = document.getElementsByClassName('total-price-value');
   
     for (const element of localStore) {
-        let total = (element.price * element.quantity);
+        let total = ((element.price * element.quantity)*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         TOTALPRICEVALUE[localStore.indexOf(element)].textContent = 'EUR  ' + total;
     }
 
@@ -102,13 +102,13 @@ function displayResume() {
     const ARRAY = [];
     let produce;
     localStore.map(item => {
-        produce = item.price * item.quantity;
+        produce = (item.price * item.quantity);
         ARRAY.push(produce);
     })
     console.log(ARRAY);
 
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const TOTALBOOK = ARRAY.reduce(reducer);
+    const TOTALBOOK = ((ARRAY.reduce(reducer))*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     console.log(TOTALBOOK);
     localStorage.setItem('finalPrice', JSON.stringify(TOTALBOOK));//store final price
     const TOTAL = document.getElementById('total');
