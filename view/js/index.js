@@ -7,7 +7,7 @@ let createProductsObj = () => {
             return response.json()
         }).then(function (products) {
             console.log('parsed json', products);
-            displayArticle(products) //execution d'affichage des articles dès qu'on reçoit le produits
+            displayArticle(products) //execution d'affichage des articles dès qu'on reçoit les produits
         })
         .catch(function (ex) {
             console.log('parsing failed', ex)
@@ -86,29 +86,31 @@ let displayArticle = (products) => {
 function addItem(ev) {
     let _id = ev.target.getAttribute('data-id'); // récupérer la valeur de l'attribut data-id sur le bouton cliqué
     console.log('add to cart item', _id);
-    SESSIONSTORE.add(_id, 1);
+    sessionStoreData.add(_id);//excecuter l'instance de la classe en ajoutant un produit
 }
 
-
-const SESSIONSTORE = { // créer un constante objet
-    KEY: 'FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl',
-    contents: [],
+class SessionStore {
+ 
+    constructor (KEY, contents){
+        this.KEY = KEY;
+        this.contents = contents;
+    }
     init() {
         //vérifier s'il exite un produit le contenu de session storage
-        let _contents = sessionStorage.getItem(this.KEY);
-        if (_contents) { // s'il y en a, on le transforme en array objet pour la récupération
-            this.contents = JSON.parse(_contents);
+        let contentsData = sessionStorage.getItem(this.KEY);
+        if (contentsData) { // s'il y en a, on le transforme en array objet pour la récupération
+            this.contents = JSON.parse(contentsData);
         } else {
             //s'ij n'y en n'a pas, on y rajoute un array vide par défaut
             this.contents = [];
             console.log(this.contents);
-            this.sync();
+            this.stire();
         }
-    },
-    async sync() { // on met la sessionstorage à jour de manière asynchrone 
-        let _store = JSON.stringify(this.contents);
-        await sessionStorage.setItem(this.KEY, _store);
-    },
+    }
+    store() { // on met à jour la sessionstorage 
+        let storeData = JSON.stringify(this.contents);
+        sessionStorage.setItem(this.KEY, storeData);
+    }
 
     add(_id) {
         let arr = PRODUCTS.filter(product => { //comparaison de l'id sélectionné à chaque id dans les objets produits
@@ -127,11 +129,13 @@ const SESSIONSTORE = { // créer un constante objet
             };
             this.contents[0] = obj; // ajouter dans le contenu su session
             //mettre à jour le contenu de session storage
-            this.sync(); // mise à jour
+            this.store(); // mise à jour
             this.contents.forEach(item => console.log(item._id));
         } else { //quand on séléctionne un produit qui n'extiste pas dans data products
             console.error('Invalid Product');
         };
-    },
-};
-SESSIONSTORE.init(); //ajouter un array vide par défaut
+    }
+}
+
+let sessionStoreData = new SessionStore('sessionData', []);//faire un instance sessionstore
+sessionStoreData.init();//ajouter un array vide par défaut
