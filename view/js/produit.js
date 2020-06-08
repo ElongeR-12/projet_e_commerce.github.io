@@ -1,4 +1,4 @@
-let sessionStore = JSON.parse(sessionStorage.getItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl'));
+let sessionStore = JSON.parse(sessionStorage.getItem('sessionData'));
 console.log(sessionStore);
 let createProductsObj = () => { //async
     fetch(`http://localhost:3000/api/cameras/${sessionStore[0]._id}`, {//await
@@ -147,7 +147,7 @@ function setQuantity(product) {
         productToSet[0].lenses = text;
         addLocal(_id, text);
         
-        sessionStorage.removeItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl');
+        sessionStorage.removeItem('sessionData');
         window.location.reload();
     }
     function find(_id){
@@ -208,17 +208,15 @@ function setQuantity(product) {
                 sync();
             }
     }
-    async function sync() { // on met la sessionstorage à jour de manière asynchrone 
+    function sync() { // on met la sessionstorage à jour de manière asynchrone 
         let localStoreItemValue = JSON.stringify(arrayOfItemValueLocalStore);
-        await localStorage.setItem(KEY, localStoreItemValue);
+        localStorage.setItem(KEY, localStoreItemValue);
     }
    
 }
 
-
-
 function reloadAndReinitialise() {
-    sessionStorage.removeItem('FFQFDQFQJYKOIUY9IEOPAZAR339209RHGBVfqkl');
+    sessionStorage.removeItem('sessionData');
     window.location.reload();
 }
 
