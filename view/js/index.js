@@ -104,7 +104,7 @@ class SessionStore {
             //s'ij n'y en n'a pas, on y rajoute un array vide par défaut
             this.contents = [];
             console.log(this.contents);
-            this.stire();
+            this.store();
         }
     }
     store() { // on met à jour la sessionstorage 
