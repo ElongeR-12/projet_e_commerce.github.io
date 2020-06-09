@@ -1,5 +1,5 @@
 let createProductsObj = () => {
-    fetch('http://localhost:3000/api/cameras/', {
+    fetch('http://localhost:3000/api/cameras', {
             method: 'GET',
             mode: 'cors'
         })
@@ -7,7 +7,8 @@ let createProductsObj = () => {
             return response.json()
         }).then(function (products) {
             console.log('parsed json', products);
-            displayArticle(products) //execution d'affichage des articles dès qu'on reçoit les produits
+            //execution d'affichage des articles
+            displayArticle(products)
         })
         .catch(function (ex) {
             console.log('parsing failed', ex)
@@ -19,45 +20,47 @@ createProductsObj();
 let PRODUCTS = [];
 
 let displayArticle = (products) => {
-    PRODUCTS = products; // rendre products accessible pour la fonction addItem, dont pour SESSIONSTORE.add()
+    // rendre products accessible pour la fonction addItem,
+    PRODUCTS = products; 
 
-    let row = document.getElementsByClassName('row');
+    let ROW = document.getElementsByClassName('row');
+    //iteration des objets produits
     products.forEach(product => {
-        const maincol = document.createElement("div");
-        maincol.classList.add("col-lg-4", "col-sm-6", "mb-4");
+        //créer un élément
+        const MAINCOLUMN = document.createElement("div");
+        //ajouter des class bootstrap
+        MAINCOLUMN.classList.add("col-lg-4", "col-sm-6", "mb-4");
 
-        const card = document.createElement("div");
-        card.classList.add("card", "h-100", 'text-center');
+        const CARD = document.createElement("div");
+        CARD.classList.add("card", "h-100", 'text-center');
 
-        const divcard = document.createElement("div");
-        divcard.classList.add("card-body");
+        const DIVCARD = document.createElement("div");
+        DIVCARD.classList.add("card-body");
 
-        const divrow = document.createElement("div");
-        divrow.classList.add("row");
+        const DIVROW = document.createElement("div");
+        DIVROW.classList.add("row");
 
-        const divcol = document.createElement("div");
-        divcol.classList.add("col-8");
+        const DIVCOLUMN = document.createElement("div");
+        DIVCOLUMN.classList.add("col-8");
 
-        const h = document.createElement("h4");
-        h.classList.add("card-title");
-        h.textContent = product.name;
+        const H = document.createElement("h4");
+        H.classList.add("card-title");
+        //définir le text de l'élément
+        H.textContent = product.name;
 
-        const divcolright = document.createElement("div");
-        divcolright.classList.add("col-4", "text-right");
+        const RIGHTCOLUMN = document.createElement("div");
+        RIGHTCOLUMN.classList.add("col-4", "text-right");
 
-        const span = document.createElement('span');
-        span.textContent = ' €';
+        const SPAN = document.createElement('span');
+        SPAN.textContent = ' €';
 
-        const pdescright = document.createElement('p');
-        pdescright.classList.add("card-text");
-        pdescright.textContent = (product.price*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        const PRICE = document.createElement('p');
+        PRICE.classList.add("card-text");
+        PRICE.textContent = (product.price*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
-        const img = document.createElement("img");
-        img.classList.add("card-img-bottom");
-        img.src = product.imageUrl;
-
-        // const ANCHOR = document.createElement("a");
-        // ANCHOR.setAttribute('href', './produit.html');
+        const IMG = document.createElement("img");
+        IMG.classList.add("card-img-bottom");
+        IMG.src = product.imageUrl;
 
         const ANCHOR = document.createElement("a");
         ANCHOR.classList.add("select");
@@ -65,28 +68,29 @@ let displayArticle = (products) => {
         ANCHOR.setAttribute('href', './produit.html');
         ANCHOR.addEventListener('click', addItem);
         ANCHOR.textContent = "Voir le produit";
+        //insérer l'élement H en tant qu'enfant de DIVCOLUMN
+        DIVCOLUMN.appendChild(H);
+        RIGHTCOLUMN.appendChild(PRICE);
+        PRICE.appendChild(SPAN);
+        DIVROW.appendChild(DIVCOLUMN);
+        DIVROW.appendChild(RIGHTCOLUMN);
 
-        divcol.appendChild(h);
-        divcolright.appendChild(pdescright);
-        pdescright.appendChild(span);
-        divrow.appendChild(divcol);
-        divrow.appendChild(divcolright);
-
-        divcard.appendChild(divrow);
-        card.appendChild(divcard);
-        card.appendChild(img);
+        DIVCARD.appendChild(DIVROW);
+        CARD.appendChild(DIVCARD);
+        CARD.appendChild(IMG);
         // ANCHOR.appendChild(button);
-        card.appendChild(ANCHOR);
-        maincol.appendChild(card);
-        row[0].appendChild(maincol);
+        CARD.appendChild(ANCHOR);
+        MAINCOLUMN.appendChild(CARD);
+        ROW[0].appendChild(MAINCOLUMN);
     });
 
 }
 
 function addItem(ev) {
-    let _id = ev.target.getAttribute('data-id'); // récupérer la valeur de l'attribut data-id sur le bouton cliqué
-    console.log('add to cart item', _id);
-    sessionStoreData.add(_id);//excecuter l'instance de la classe en ajoutant un produit
+    // récupérer la valeur de l'attribut data-id 
+    let _id = ev.target.getAttribute('data-id');
+    //excecuter l'instance de la classe en ajoutant un produit
+    sessionStoreData.add(_id);
 }
 
 class SessionStore {
@@ -98,28 +102,32 @@ class SessionStore {
     init() {
         //vérifier s'il exite un produit le contenu de session storage
         let contentsData = sessionStorage.getItem(this.KEY);
-        if (contentsData) { // s'il y en a, on le transforme en array objet pour la récupération
+        if (contentsData) {
+             //transformer en array objet pour la récupération
             this.contents = JSON.parse(contentsData);
         } else {
-            //s'ij n'y en n'a pas, on y rajoute un array vide par défaut
+            //rajouter un array vide par défaut
             this.contents = [];
-            console.log(this.contents);
             this.store();
         }
     }
-    store() { // on met à jour la sessionstorage 
+    store() { 
+        //mettre à jour la sessionstorage 
         let storeData = JSON.stringify(this.contents);
         sessionStorage.setItem(this.KEY, storeData);
     }
 
     add(_id) {
-        let arr = PRODUCTS.filter(product => { //comparaison de l'id sélectionné à chaque id dans les objets produits
-            if (product._id == _id) { //si on a le même id que l'item sélectionné dans le produits fetched
+        //comparer l'id sélectionné à chaque id dans products
+        let arr = PRODUCTS.filter(product => { 
+            if (product._id == _id) { 
                 return true;
             }
         });
-        if (arr && arr[0]) { //si on a l'array et un premier élément 
-            let obj = { //on associe les propriétés des produits à ajouter à son correspondance dans le data produits
+         //si on a l'array qui contient des produits
+        if (arr && arr[0]) {
+            //récréer un objet avec les propriétés de son correspondance dans products
+            let obj = { 
                 _id: arr[0]._id,
                 name: arr[0].name,
                 description: arr[0].description,
@@ -127,11 +135,11 @@ class SessionStore {
                 lenses: arr[0].lenses,
                 price: arr[0].price
             };
-            this.contents[0] = obj; // ajouter dans le contenu su session
+            // ajouter dans le contenu su session
+            this.contents[0] = obj; 
             //mettre à jour le contenu de session storage
-            this.store(); // mise à jour
-            this.contents.forEach(item => console.log(item._id));
-        } else { //quand on séléctionne un produit qui n'extiste pas dans data products
+            this.store(); 
+        } else {
             console.error('Invalid Product');
         };
     }
