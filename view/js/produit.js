@@ -166,11 +166,19 @@ function setQuantity(product) {
         if(match && match[0])
             return match[0];
     }
-  
+    function compareLenseCategory(lensesCategory){
+        //chercher un produit dans localstorage la catégorie de lentille choisi
+        let match = arrayOfItemValueLocalStore.filter(item=>{
+            if(item.lenses == lensesCategory)
+                return true;
+        });
+        if(match && match[0])
+            return match[0];
+    }  
     function addLocal(_id, lensesCategory){
         //ajouter le produit dans local storage
         //checker si celui-ci existe déjà dans le local storage
-        if(find(_id)){
+        if(find(_id) && compareLenseCategory(lensesCategory)){
             increase(_id);
         }else{
             //ajouter un nouveau produit élément dans localstorage
