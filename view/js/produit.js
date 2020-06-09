@@ -1,6 +1,6 @@
 let sessionStore = JSON.parse(sessionStorage.getItem('sessionData'));
 console.log(sessionStore);
-let createProductsObj = () => { //async
+let createProductsObj = () => {
     fetch(`http://localhost:3000/api/cameras/${sessionStore[0]._id}`, {//await
             method: 'GET',
             mode: 'cors'
@@ -19,7 +19,6 @@ createProductsObj();
 
 function displayProduct(product) {
     displayImage(product);
-    addAltImage(product);
     displayProductName(product);
     displayDescription(product);
     addSelect(product);
@@ -29,164 +28,174 @@ function displayProduct(product) {
 
 
 function displayImage(product) {
-    const img = document.getElementsByClassName('img-thumbnail'); // récupérer les éléments images avec classe img-thumbnail
-    img[0].setAttribute('src', product.imageUrl)//ajouter le chemin image
-}
-function addAltImage(product) {
-    const img = document.getElementsByClassName('img-thumbnail'); // récupérer les éléments images avec classe img-thumbnail
-    img[0].setAttribute('Alt', product.name)
+    // récupérer les éléments images avec classe img-thumbnail
+    const IMG = document.getElementsByClassName('img-thumbnail'); 
+    //ajouter le chemin image
+    IMG[0].setAttribute('src', product.imageUrl)
+    IMG[0].setAttribute('Alt', product.name)
 }
 function displayProductName(product) {
-    const h5 = document.querySelectorAll('h5');
-    h5[0].textContent = product.name;
+    const H5 = document.querySelectorAll('h5');
+    H5[0].textContent = product.name;
 }
 
 function displayDescription(product) {
-   const textDescription = document.getElementsByClassName('description');
-    textDescription[0].textContent = product.description
-    
+   const DESCRIPTION = document.getElementsByClassName('description');
+   DESCRIPTION[0].textContent = product.description
 }
 
 
 function addSelect(product) {
-    const parentSelect = document.getElementsByClassName('parentSelect'); //récupérer l'élement parent select des options
-    const select = document.createElement("select");
-    select.setAttribute("id", "select");
-    select.setAttribute("required", "");
-    parentSelect[0].append(select);
-    // select.add(new Option('Choisissez une lentille'));
+    //récupérer l'élement parent select des options
+    const SELECTPARENT = document.getElementsByClassName('parentSelect'); 
+    const SELECT = document.createElement("select");
+    SELECT.setAttribute("id", "select");
+    SELECT.setAttribute("required", "");
+    SELECTPARENT[0].append(SELECT);
+
     for (const element of product.lenses){
-        select.add(new Option(element, element))
+        //ajouter les différents options et ses valeur sur select élément
+        SELECT.add(new Option(element, element))
     }
 }
 
 function displayPrice(product) {
     //initialiser l'affichage du prix
-    const priceElement = document.getElementsByClassName('priceElement');
-    const spanEuroElement = document.getElementsByClassName('spanEuroElement');
-    spanEuroElement[0].textContent = ' EUR';
-    priceElement[0].textContent = ((product.price)*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');    
+    const PRICEELEMENT = document.getElementsByClassName('priceElement');
+    const SPAN = document.getElementsByClassName('spanEuroElement');
+    SPAN[0].textContent = ' EUR';
+    //remplacer le nombre suivi par 3 ensemble de nombre et un point par sa valeur et un virgule
+    PRICEELEMENT[0].textContent = ((product.price)*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');    
 }
 
-
-
 function setQuantity(product) {
-   
+    //déclarer un clé et valeur de localstorage
     const KEY = 'LOCALSTORE';
     let arrayOfItemValueLocalStore = [];
-
+    //initialiser un variable pour la personalisation
     let productToSet = [];
-
+    //ajouter le produit sélectionner dans la variable
     productToSet.push(product);
-    console.log(productToSet);
-   
-    productToSet[0].quantity = 1; // ajouter un propriété qty comme quantité initialisé par une valeur 1
-    console.log(productToSet[0].quantity);
-    const QUANTITY = document.getElementsByClassName('qty'); //cibler l'élément span avec un classe qty 
-    QUANTITY[0].textContent = productToSet[0].quantity; // mettre la valeur 1 en tant que texte 
-
-    const PLUS = document.getElementsByClassName('plus'); //cibler l'élémént span +
-    console.log(sessionStore[0]._id);
-    PLUS[0].setAttribute("data-id", productToSet[0]._id); //ajouter l'attribut data-id sur l'élément
-
-    PLUS[0].addEventListener('click', incrementQuantity) // ajouter l'évènement click et éxecuter la fonction pour augmenter la quantité
-
-    const MINUS = document.getElementsByClassName('minus'); //cibler l'élémént span -
-    MINUS[0].setAttribute('data-id', productToSet[0]._id) //ajouter l'attribut data-id sur l'élément  
-    MINUS[0].addEventListener('click', decrementQuantity); //ajouter l'évènement click et éxecuter la fonction pour diminuer la quantité
-
+    //ajouter un propriété quantité initialisé par une valeur 1
+    productToSet[0].quantity = 1; 
+    //cibler l'élément span avec un classe qty 
+    const QUANTITY = document.getElementsByClassName('qty'); 
+    // mettre la valeur 1 en tant que texte 
+    QUANTITY[0].textContent = productToSet[0].quantity; 
+    //cibler l'élémént span +
+    const PLUS = document.getElementsByClassName('plus'); 
+    //ajouter l'attribut data-id sur l'élément
+    PLUS[0].setAttribute("data-id", productToSet[0]._id); 
+    // ajouter l'évènement click et éxecuter la fonction pour augmenter la quantité
+    PLUS[0].addEventListener('click', incrementQuantity) 
+    //cibler l'élémént span -
+    const MINUS = document.getElementsByClassName('minus'); 
+    //ajouter l'attribut data-id sur l'élément  
+    MINUS[0].setAttribute('data-id', productToSet[0]._id);
+    //ajouter l'évènement click et 
+    // éxecuter la fonction pour diminuer la quantité
+    MINUS[0].addEventListener('click', decrementQuantity); 
     console.log(PLUS[0], QUANTITY[0], MINUS[0]);
    
     function incrementQuantity(ev, increment = 1) {
-        ev.preventDefault(); //prévenir le comportement par défaut
-        console.log(productToSet);
-        console.log(productToSet[0].quantity);
-        productToSet[0].quantity += increment; //ajouter la valeur initiale de propriété qty par 1
-        console.log(productToSet[0].quantity);
-        const newQty = productToSet[0].quantity; // conserver cette valeur dans newQty
-        const newTextContent = document.getElementsByClassName('qty'); //cibler l'élément span avec un classe qty 
-        newTextContent[0].textContent = newQty; //mettre à jour le texte avec newQty
-        console.log(newQty);
-        console.log(productToSet[0]);
+        //prévenir le comportement par défaut
+        ev.preventDefault(); 
+        //ajouter la valeur initiale de propriété qty par 1
+        productToSet[0].quantity += increment; 
+        // conserver cette valeur dans newQty
+        const newQty = productToSet[0].quantity; 
+        //cibler l'élément span avec un classe qty 
+        const newTextContent = document.getElementsByClassName('qty'); 
+        //mettre à jour le texte avec newQty
+        newTextContent[0].textContent = newQty; 
         uptdatePrice()
     }
     function decrementQuantity(ev, decrement = 1) {
         ev.preventDefault();
+        //ajouter la valeur initiale de propriété qty par 1
         productToSet[0].quantity -= decrement;
         const newQty = productToSet[0].quantity;
         const newTextContent = document.getElementsByClassName('qty');
         newTextContent[0].textContent = newQty;
-        console.log(newQty);
-        console.log(productToSet[0]);
         uptdatePrice()
     }
     function uptdatePrice(){
-        console.log(productToSet[0].quantity);
+        //calculer le prix unitaire multiplié par la quantité
         let total = ((productToSet[0].quantity * productToSet[0].price)*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-        console.log(total);
+        //cibler l'élement pour afficher le prix total
         let price = document.getElementsByClassName('priceElement');          
         price[0].textContent = total;
         if(total < 1){
+            //réactualiser la page
             reloadAndReinitialise();
         }
     }
     (function sendProductToLocastorage(){
         let button = document.querySelector('button');
-        button.setAttribute('data-id', productToSet[0]._id);//ajouter l'id du produit en question en attribut sur le boutton d'envoi au panier
-        console.log(button);
+        //ajouter l'id du produit en question 
+        //en attribut sur le boutton d'envoi au panier
+        button.setAttribute('data-id', productToSet[0]._id);
+        //ajouter un évenement click
         button.addEventListener('click', sendProduct);
         init();
     })(); 
     function sendProduct(ev){
         ev.preventDefault();
-        let _id = ev.target.getAttribute('data-id');//récupérer l'id quand on clique l'envoi
+        //récupérer l'id quand on clique l'envoi
+        let _id = ev.target.getAttribute('data-id');
+        //cibler l'élement select
         let e = document.getElementById("select");
-        let value = e.options[e.selectedIndex].value;
-        let text = e.options[e.selectedIndex].text;
-     
-        productToSet[0].lenses = text;
-        addLocal(_id, text);
-        
-        sessionStorage.removeItem('sessionData');
-        window.location.reload();
+        //récupérer le texte de la valeur de select
+        let lensesCategory = e.options[e.selectedIndex].text;
+        //assigner la valeur au propriété lentille
+        //du produit personnalisé
+        productToSet[0].lenses = lensesCategory;
+        //Executer la fonction pour ajouter 
+        //le produit personnalisé dans panier
+        addLocal(_id, lensesCategory);
+        //réinitialiser la sessionstorage et 
+        //vider le localstorage
+        reloadAndReinitialise()
     }
     function find(_id){
         //chercher un produit dans localstorage par son id
-        let match =   arrayOfItemValueLocalStore.filter(item=>{
+        let match = arrayOfItemValueLocalStore.filter(item=>{
             if(item._id == _id)
                 return true;
         });
         if(match && match[0])
             return match[0];
     }
-    
-    function addLocal(_id, text){
+  
+    function addLocal(_id, lensesCategory){
         //ajouter le produit dans local storage
         //checker si celui-ci existe déjà dans le local storage
         if(find(_id)){
             increase(_id);
         }else{
-            add(text);
+            //ajouter un nouveau produit élément dans localstorage
+            add(lensesCategory);
         }
     }
     function increase(_id){
-        const newQty = productToSet[0].quantity; // conserver cette valeur dans newQty
-        const newTextContent = document.getElementsByClassName('qty'); //cibler l'élément span avec un classe qty 
-        newTextContent[0].textContent = newQty; //mettre à jour le texte avec newQty
-        //augmenter 1 la quantité dans localstorage
+        //récupérer la quantité actuel du produit personnalisé
+        const newQty = productToSet[0].quantity; 
+        //parcourir chaque élément déjà envoyé
+        //dans localstorage ou panier
         arrayOfItemValueLocalStore = arrayOfItemValueLocalStore.map(item=>{
             if(item._id === _id)
+                //ajouter la quantité par le nouveau quantité personnalisé
                 item.quantity = item.quantity + newQty;
             return item;
         });
         //mettre à jour localstorage
-        sync();
+        store();
     }
-    function add(text){
+    function add(lensesCategory){
         let obj = {
             description: productToSet[0].description,
             imageUrl: productToSet[0].imageUrl,
-            lenses: text,
+            lenses: lensesCategory,
             name: productToSet[0].name,
             price: productToSet[0].price,
             quantity: productToSet[0].quantity,
@@ -195,26 +204,28 @@ function setQuantity(product) {
        
         arrayOfItemValueLocalStore.push(obj);
         
-        sync();
+        store();
     }
     function init() {
         //vérifier s'il exite un produit le contenu de session storage
         let localStoreItemValue = localStorage.getItem(KEY);
-        if (localStoreItemValue) { // s'il y en a, on le transforme en array objet pour la récupération
+        if (localStoreItemValue) { 
+            // s'il y en a, on le transforme en array objet pour la récupération
                 arrayOfItemValueLocalStore = JSON.parse(localStoreItemValue);
             } else {
                 //s'ij n'y en n'a pas, on y rajoute un array vide par défaut
                 arrayOfItemValueLocalStore = [];
-                sync();
+                store();
             }
     }
-    function sync() { // on met la sessionstorage à jour de manière asynchrone 
+    function store() { 
+        // on met à jour la localstorage 
         let localStoreItemValue = JSON.stringify(arrayOfItemValueLocalStore);
         localStorage.setItem(KEY, localStoreItemValue);
     }
    
 }
-
+//réactualiser la page et vider la sessionstorage
 function reloadAndReinitialise() {
     sessionStorage.removeItem('sessionData');
     window.location.reload();
