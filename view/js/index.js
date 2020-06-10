@@ -78,7 +78,6 @@ let displayArticle = (products) => {
         DIVCARD.appendChild(DIVROW);
         CARD.appendChild(DIVCARD);
         CARD.appendChild(IMG);
-        // ANCHOR.appendChild(button);
         CARD.appendChild(ANCHOR);
         MAINCOLUMN.appendChild(CARD);
         ROW[0].appendChild(MAINCOLUMN);

@@ -16,7 +16,6 @@ let createProductsObj = () => {
         })
 }
 createProductsObj();
-
 function displayProduct(product) {
     displayImage(product);
     displayProductName(product);
@@ -25,8 +24,6 @@ function displayProduct(product) {
     setQuantity(product);
     displayPrice(product);  
 }
-
-
 function displayImage(product) {
     // récupérer les éléments images avec classe img-thumbnail
     const IMG = document.getElementsByClassName('img-thumbnail'); 
@@ -43,8 +40,6 @@ function displayDescription(product) {
    const DESCRIPTION = document.getElementsByClassName('description');
    DESCRIPTION[0].textContent = product.description
 }
-
-
 function addSelect(product) {
     //récupérer l'élement parent select des options
     const SELECTPARENT = document.getElementsByClassName('parentSelect'); 
@@ -58,7 +53,6 @@ function addSelect(product) {
         SELECT.add(new Option(element, element))
     }
 }
-
 function displayPrice(product) {
     //initialiser l'affichage du prix
     const PRICEELEMENT = document.getElementsByClassName('priceElement');
@@ -67,7 +61,6 @@ function displayPrice(product) {
     //remplacer le nombre suivi par 3 ensemble de nombre et un point par sa valeur et un virgule
     PRICEELEMENT[0].textContent = ((product.price)*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');    
 }
-
 function setQuantity(product) {
     //déclarer un clé et valeur de localstorage
     const KEY = 'LOCALSTORE';
@@ -96,7 +89,6 @@ function setQuantity(product) {
     // éxecuter la fonction pour diminuer la quantité
     MINUS[0].addEventListener('click', decrementQuantity); 
     console.log(PLUS[0], QUANTITY[0], MINUS[0]);
-   
     function incrementQuantity(ev, increment = 1) {
         //prévenir le comportement par défaut
         ev.preventDefault(); 
@@ -231,7 +223,6 @@ function setQuantity(product) {
         let localStoreItemValue = JSON.stringify(arrayOfItemValueLocalStore);
         localStorage.setItem(KEY, localStoreItemValue);
     }
-   
 }
 //réactualiser la page et vider la sessionstorage
 function reloadAndReinitialise() {
