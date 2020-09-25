@@ -5,43 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style>
-        .controls{
-            height: 1.5rem;
-            cursor: pointer;
-            width: 70%;
-            display: flex;
-            justify-content: space-between;
-            background-color: #eee;
-        }
-        .controls span:nth-child(1),
-        .controls span:nth-child(3){
-            border: 1px solid cornflowerblue;
-            color: cornflowerblue;
-            background: #fff;
-            font-size: 1rem;
-            line-height: 1.5rem;
-            padding: 0 0.5rem;
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body id="product">
     <header>
-        <nav style="background-color: #f3e9f1;">
-            <div style="display: flex; justify-content: space-around; font-size: x-large;">
-                <ul style="display: flex; list-style: none; align-items: center;">
+        <nav>
+            <div>
+                <ul>
                     <li>
                         <a href="./index.html">
-                            <img src="../images/logo/logoOrnico.png" style="width: 200px; height: 100px; max-width: 100%;" alt="logo ornico">
+                            <img class="img-header" src="../images/logo/logoOrnico.png" alt="logo ornico">
                         </a>
                     </li>  
                 </ul>
-                <ul style="display: flex; list-style: none; align-items: center;">
-                    <li style="margin-right: 35px"> <a href="./panier.html">Panier</a> </li>
+                <ul class="panier-nav">
+                    <li> <a href="./panier.html">Panier</a> </li>
                 </ul>
             </div>
         </nav>
+    
     </header>
     <main>
         <div class="container">

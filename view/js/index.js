@@ -23,64 +23,64 @@ let displayArticle = (products) => {
     // rendre products accessible pour la fonction addItem,
     PRODUCTS = products; 
 
-    let ROW = document.getElementsByClassName('row');
+    let row = document.getElementsByClassName('row');
     //iteration des objets produits
     products.forEach(product => {
         //créer un élément
-        const MAINCOLUMN = document.createElement("div");
+        const mainColumn = document.createElement("div");
         //ajouter des class bootstrap
-        MAINCOLUMN.classList.add("col-lg-4", "col-sm-6", "mb-4");
+        mainColumn.classList.add("col-lg-4", "col-sm-6", "mb-4");
 
-        const CARD = document.createElement("div");
-        CARD.classList.add("card", "h-100", 'text-center');
+        const card = document.createElement("div");
+        card.classList.add("card", "h-100", 'text-center');
 
-        const DIVCARD = document.createElement("div");
-        DIVCARD.classList.add("card-body");
+        const divCard = document.createElement("div");
+        divCard.classList.add("card-body");
 
-        const DIVROW = document.createElement("div");
-        DIVROW.classList.add("row");
+        const divRow = document.createElement("div");
+        divRow.classList.add("row");
 
-        const DIVCOLUMN = document.createElement("div");
-        DIVCOLUMN.classList.add("col-8");
+        const divColumn = document.createElement("div");
+        divColumn.classList.add("col-8");
 
-        const H = document.createElement("h4");
-        H.classList.add("card-title");
+        const h = document.createElement("h4");
+        h.classList.add("card-title");
         //définir le text de l'élément
-        H.textContent = product.name;
+        h.textContent = product.name;
 
-        const RIGHTCOLUMN = document.createElement("div");
-        RIGHTCOLUMN.classList.add("col-4", "text-right");
+        const rightColumn = document.createElement("div");
+        rightColumn.classList.add("col-4", "text-right");
 
-        const SPAN = document.createElement('span');
-        SPAN.textContent = ' €';
+        const span = document.createElement('span');
+        span.textContent = ' €';
 
-        const PRICE = document.createElement('p');
-        PRICE.classList.add("card-text");
-        PRICE.textContent = (product.price*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        const price = document.createElement('p');
+        price.classList.add("card-text");
+        price.textContent = (product.price*0.001).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
-        const IMG = document.createElement("img");
-        IMG.classList.add("card-img-bottom");
-        IMG.src = product.imageUrl;
+        const img = document.createElement("img");
+        img.classList.add("card-img-bottom");
+        img.src = product.imageUrl;
 
-        const ANCHOR = document.createElement("a");
-        ANCHOR.classList.add("select");
-        ANCHOR.setAttribute('data-id', product._id);
-        ANCHOR.setAttribute('href', './produit.html');
-        ANCHOR.addEventListener('click', addItem);
-        ANCHOR.textContent = "Voir le produit";
+        const anchor = document.createElement("a");
+        anchor.classList.add("select");
+        anchor.setAttribute('data-id', product._id);
+        anchor.setAttribute('href', './produit.html');
+        anchor.addEventListener('click', addItem);
+        anchor.textContent = "Voir le produit";
         //insérer l'élement H en tant qu'enfant de DIVCOLUMN
-        DIVCOLUMN.appendChild(H);
-        RIGHTCOLUMN.appendChild(PRICE);
-        PRICE.appendChild(SPAN);
-        DIVROW.appendChild(DIVCOLUMN);
-        DIVROW.appendChild(RIGHTCOLUMN);
+        divColumn.appendChild(h);
+        rightColumn.appendChild(price);
+        price.appendChild(span);
+        divRow.appendChild(divColumn);
+        divRow.appendChild(rightColumn);
 
-        DIVCARD.appendChild(DIVROW);
-        CARD.appendChild(DIVCARD);
-        CARD.appendChild(IMG);
-        CARD.appendChild(ANCHOR);
-        MAINCOLUMN.appendChild(CARD);
-        ROW[0].appendChild(MAINCOLUMN);
+        divCard.appendChild(divRow);
+        card.appendChild(divCard);
+        card.appendChild(img);
+        card.appendChild(anchor);
+        mainColumn.appendChild(card);
+        row[0].appendChild(mainColumn);
     });
 
 }
