@@ -14,6 +14,6 @@ The server should run on `localhost` with default port `3000`. If the
 server runs on another port for any reason, this is printed to the
 console when the server starts, e.g. `Listening on port 3001`.
 
-### Live Demo
+### Live Demo - click image to view video
 
-![](./images/demo/p5demo.gif)
+[![E-commerce](./images/demo/e-commerce.png)](https://www.youtube.com/watch?v=eXbVOMOEIf8&t=27s)
